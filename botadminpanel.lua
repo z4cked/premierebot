@@ -10,6 +10,7 @@ local v8 = math.ldexp;
 local v9 = getfenv or function()
 	return _ENV;
 end;
+print("ya it working")
 local v10 = setmetatable;
 local v11 = pcall;
 local v12 = select;
