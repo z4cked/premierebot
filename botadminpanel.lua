@@ -29,7 +29,7 @@ Topbar.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Topbar.BorderSizePixel = 0
 Topbar.Position = UDim2.new(0.293453723, 0, 0.104790419, 0)
 Topbar.Selectable = true
-Topbar.Size = UDim2.new(0.398796082, 0, 0.0449101813, 0)
+Topbar.Size = UDim2.new(0.385648996, 0, 0.0321433917, 0)
 Topbar.ZIndex = 11
 
 UIAspectRatioConstraint.Parent = Topbar
@@ -163,25 +163,7 @@ UIAspectRatioConstraint_8.AspectRatio = 9.071
 
 -- Scripts:
 
-local function ONUTI_fake_script() -- Minimize.Minimize 
-	local script = Instance.new('LocalScript', Minimize)
-
-	script.Parent.Parent.Draggable = true
-	
-	script.Parent.MouseButton1Click:Connect(function()
-		
-		if script.Parent.Parent.ClipsDescendants == true then
-			script.Parent.Text = "-"
-			script.Parent.Parent.ClipsDescendants = false
-		else
-			script.Parent.Parent.ClipsDescendants = true
-			script.Parent.Text = "+"
-		end
-		
-	end)
-end
-coroutine.wrap(ONUTI_fake_script)()
-local function GFOPS_fake_script() -- Execute.Execute 
+local function IIIOLL_fake_script() -- Execute.Execute 
 	local script = Instance.new('LocalScript', Execute)
 
 	local MainFrame = script.Parent.Parent
@@ -241,4 +223,60 @@ local function GFOPS_fake_script() -- Execute.Execute
 		
 	end)
 end
-coroutine.wrap(GFOPS_fake_script)()
+coroutine.wrap(IIIOLL_fake_script)()
+local function FATDVSC_fake_script() -- Topbar.DragScript 
+	local script = Instance.new('LocalScript', Topbar)
+
+	--Not made by me, check out this video: https://www.youtube.com/watch?v=z25nyNBG7Js&t=22s
+	--Put this inside of your Frame and configure the speed if you would like.
+	--Enjoy! Credits go to: https://www.youtube.com/watch?v=z25nyNBG7Js&t=22s
+	
+	local UIS = game:GetService('UserInputService')
+	local frame = script.Parent
+	local dragToggle = nil
+	local dragSpeed = 0.25
+	local dragStart = nil
+	local startPos = nil
+	
+	script.Parent.Minimize.MouseButton1Click:Connect(function()
+	
+		if script.Parent.ClipsDescendants == true then
+			script.Parent.Minimize.Text = "-"
+			script.Parent.ClipsDescendants = false
+		else
+			script.Parent.ClipsDescendants = true
+			script.Parent.Minimize.Text = "+"
+		end
+	
+	end)
+	
+	local function updateInput(input)
+		local delta = input.Position - dragStart
+		local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+			startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+		game:GetService('TweenService'):Create(frame, TweenInfo.new(dragSpeed), {Position = position}):Play()
+	end
+	
+	frame.InputBegan:Connect(function(input)
+		if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then 
+			dragToggle = true
+			dragStart = input.Position
+			startPos = frame.Position
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragToggle = false
+				end
+			end)
+		end
+	end)
+	
+	UIS.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			if dragToggle then
+				updateInput(input)
+			end
+		end
+	end)
+	
+end
+coroutine.wrap(FATDVSC_fake_script)()
