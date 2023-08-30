@@ -19,7 +19,7 @@ local UIAspectRatioConstraint_8 = Instance.new("UIAspectRatioConstraint")
 --Properties:
 
 Cmds.Name = "Cmds"
-Cmds.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+Cmds.Parent = game.CoreGui
 
 Topbar.Name = "Topbar"
 Topbar.Parent = Cmds
